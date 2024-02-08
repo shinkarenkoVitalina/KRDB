@@ -1,0 +1,207 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'user_pages/css/desk-space.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Доска</title>
+</head>
+<body>
+{% if request.session.user %}
+    <header class="main_page">
+            <h1 class="logo">DONE</h1>
+            <!--<select class="rp" name="workspace" id="workspace">
+                <optgroup  class="rp" label="Рабочие пространства">
+                    <option value="option1">Рабочее пространство 1</option>
+                    <option value="option2">Рабочее пространство 2</option>
+                </optgroup>
+            </select>-->
+            <button class = "voiti" type="button" name="button"><a href="{% url 'logout_user' %}">Выйти</a></button>
+<button class = "voiti" type="button" name="button"><a href="{% url 'desk' id_ws %}">Вернуться в рабочее пространство</a></button>
+
+    </header>
+    <hr class="header-hr">
+    <div class="container">
+        <div class="sidebar">
+            <div class="options">
+                <h3 class="sign">Мои доски</h3>
+                {% for desk in Desks %}
+                    <h5 class="sign">{{desk.desk_name}}</h5>
+                {% endfor %}
+                <h3 class="sign">Сроки</h3>
+                    <ul>
+                        <li><img class="icon" src="{% static 'user_pages/img/green-arrow.png' %}" alt="">Предстоящие</li>
+                        <li><img class="icon" src="{% static 'user_pages/img/yellow-arrow.png' %}" alt=""> Срочные</li>
+                        <li><img class="icon" src="{% static 'user_pages/img/red-arrow.png' %}" alt=""> Просроченные</li>
+                        <li><img class="icon" src="{% static 'user_pages/img/empty-arrow.png' %}" alt=""> Выполненные</li>
+                    </ul>
+            </div>
+        </div>
+        <div class="main-content">
+            <h2 class="sign">{{desk_name}}</h2>
+                <div id="board" class="columns-container">
+
+
+
+
+
+
+
+
+
+                    {% if Lists %}
+                    {% for list in Lists%}
+                    <div class="column">
+                            <h4 class="sign">{{list.name}}</h4>
+                    <!--
+                        <div id="inputContainer">
+                          <input type="text" id="inputField">
+                          <button id="saveButton">Сохранить</button>
+                        </div>
+                      -->
+
+                        <div id="popup-overlay{{list.id}}">
+                            <div id="window{{list.id}}">
+                                <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+                                <h4 class="sign">Новая карточка</h4>
+                                <form method="post" action="{% url 'createcard' id_ws desk_id list.id %}">
+                                    {% csrf_token %}
+                                 <input class="input-text" type="text" name = "name" id="input" placeholder="Название">
+                                <button class = "type-1" type="submit" name="button">Создать</button>
+                                    </form>
+                            </div>
+                        </div>
+                        <a href="#popup-overlay{{list.id}}" id="addCardButton" class="link-create-new">Добавить карточку</a>
+                        {%  if Tasksinlists %}
+                        {% for tasks in Tasksinlists %}
+                        {% for task in tasks %}
+                        {% if task.list_id == list.id %}
+                        <a href="#popup-exist-card" class="exist-card">
+                            <div class="view-card">
+                                <div class="color" style="background-color: {{ header_color }};">
+                                    {% if task.deadline %}
+                                    {% if mes_err %}
+                                    <span>{{ mes_err }}</span>
+                                    {% else %}
+                                    <span>{{task.dedline}}</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <span></span>
+                                    {% endif %}
+                                </div>
+                                <div class="main-part">
+                                    <span>{{task.name}}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if Tasksinlists %}
+                        {% for tasks in Tasksinlists %}
+                        {% for task in tasks %}
+                        {% if task.list_id == list.id %}
+                        <div id="popup-exist-card{{task.id}}">
+                            <div id="window-card{{task.id}}">
+                                <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+                                <div class="cover"></div>
+                                <div class="main-card-part">
+                                    <div class="main-card-content">
+                                        <div class="card-header"></div>
+                                        <h3>{{task.name}}</h3>
+                                        <h4>Описание</h4>
+                                        <h5 class="descript">{{task.desc}}
+
+                                        </h5>
+                                        <button>Показать ещё</button>
+                                        <button>Скрыть</button>
+                                        <h5>"Дедлайн"</h5>
+                                        <h5>Метки</h5>
+                                        <div class="label">
+                                            <h5>Название метки</h5>
+                                        </div>
+                                        <ul class="checklist">
+                                            <div class="button-group">
+                                                <h4>название задачи</h4>
+                                                <div class="buttons">
+                                                    <button class="checklist-button">Редактировать</button>
+                                                    <button class="checklist-button"><a href="">Удалить</a></button>
+                                                </div>
+                                            </div>
+                                            <div class="chekbox-points">
+                                                <li>
+                                                  <label>
+                                                    <input class="checkbox-input" type="checkbox">
+                                                    Пункт 1
+                                                  </label>
+                                                </li>
+                                                <li>
+                                                  <label>
+                                                    <input class="checkbox-input" type="checkbox">
+                                                    Пункт 2
+                                                  </label>
+                                                </li>
+                                                <li>
+                                                  <label>
+                                                    <input class="checkbox-input" type="checkbox">
+                                                    Пункт 3
+                                                  </label>
+                                                </li>
+                                            <!-- Добавьте дополнительные пункты чек-листа -->
+                                            </div>
+
+                                          </ul>
+                                    </div>
+                                    <div class="sidebar-content">
+                                        <h5>Связанные карточки</h5>
+                                            <a href="">Карточка 1</a>
+                                            <a href="">Карточка 2</a>
+                                        <h5>Добавить на карточку</h5>
+                                            <button class="checklist-button">Участники</button>
+                                            <button class="checklist-button">Метки</button>
+                                            <button class="checklist-button">Чек-лист</button>
+                                            <button class="checklist-button">Даты</button>
+                                            <button class="checklist-button">Вложения</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                        {% endfor %}
+                        {% endif %}
+                </div>
+                    {% endfor %}
+                    {% endif %}
+             <div class="column">
+                 <a href="#popup-list" id="addListButton{{desk_id}}" class="link-create-new">Добавить список</a>
+                 <div id="popup-list{{desk_id}}">
+                            <div id="window-list{{desk_id}}">
+                                <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+                                <h4 class="sign">Новый список </h4>
+                                <form method="post" action="{% url 'createlist' id_ws desk_id %}">
+                                    {% csrf_token %}
+                                <input class="input-text" type="text" name = "name" id="input-list" placeholder="Название">
+                                <button class = "type-1" type="submit" name="button">Создать</button>
+                                    </form>
+                            </div>
+                 </div>
+             </div>
+        </div>
+    </div>
+
+
+
+
+
+        {% else %}
+    <h1>У вас нет доступа к данной странице,  зарегестрируйтесь или войдите в аккаунт</h1>
+    {% endif %}
+</body>
+</html>

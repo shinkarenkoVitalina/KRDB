@@ -1,0 +1,49 @@
+{% load static %}
+<! DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'mainpage/css/main_page_position.css' %}">
+        <link rel="stylesheet" href="{% static 'mainpage/css/main_page_view.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+        <title>Done</title>
+        <meta content="text/html; charset=utf-8">
+    </head>
+    <body>
+        <header class="main_page">
+            <img src="{% static 'mainpage/img/DONE_logo_edit.svg' %}" alt="">
+            <button class = "voiti" type="button" name="button"><a href="/registration">Войти</a></button>
+            <hr class="header-hr">
+        </header>
+
+        <main>
+            <div class="title-h1">
+                <h1>Используйте время с умом вместе с <span class="logo">DONE</span></h1>
+            </div>
+            <div class="text">
+                <p>DОNE - веб-приложение для планирования.
+                  Он поможет Вам упорядочить и распределить задачи,
+                  работать меньше и успевать больше.</p>
+            </div>
+            <div class="background_image">
+                <img src= "{% static 'mainpage/img/background_main_page.svg' %}" alt="">
+                <div class="circle-pink"></div>
+                <div class="circle-orange"></div>
+            </div>
+
+            <div class="conteiner_for_slaider">
+
+                      <div class="slider-block_1">
+                        <img class="main-slider-img-1" src="{% static 'mainpage/img/slider-block_1.svg' %}" alt="">
+                          <div class="slider-block_text">
+                            <h3 class="slider_1">Ставьте перед собой точные задачи</h3>
+                            <p class="p-1">Даже самая маленькая, но верно поставленная задача является шагом к успеху</p>
+                          </div>
+                      </div>
+
+                    <div class="start-work">
+                        <button class="type-1" type="button" name="button"><a href="/registration">Начать работу</a></button>
+                    </div>
+            </div>
+        </main>
+    </body>
+</html>

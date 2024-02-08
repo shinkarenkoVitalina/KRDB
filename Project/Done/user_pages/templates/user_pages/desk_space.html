@@ -1,0 +1,104 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'user_pages/css/space_position.css' %}">
+    <link rel="stylesheet" href="{% static 'user_pages/css/space_style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Доска</title>
+</head>
+<body>
+ {% if request.session.user %}
+    <header class="main_page">
+            <h1 class="logo">DONE</h1>
+            <button class = "voiti" type="button" name="button"><a href="{% url 'logout_user' %}">Выйти</a></button>
+         <button class = "voiti" type="button" name="button"><a href="{% url 'rp_space' %}">Вернуться к рабочим пространствам</a></button>
+            <hr class="header-hr">
+    </header>
+
+
+
+    <div class="main_part">
+        <div>
+            <h2 class="sign">{{rp_name}} <a href="#popup-edit-rp">
+            <img src="{% static 'user_pages\img\pencil.png' %}" alt=""></a></h2>
+            <h3 class="sign">Описание</h3>
+            <span>{{rp_desc}}</span>
+        </div>
+    <div>
+        <h2 class="sign">Доска</h2>
+    </div>
+    <a href="#popup-overlay" class="link-create-new">
+        <img src="{% static 'user_pages/img/add.png' %}" alt="">Создать новую</a>
+    <div>
+        <h3 class="sign">Выбрать существующую</h3>
+    </div>
+        {% if desk_spaces != '' %}
+        {% for desk in desk_spaces %}
+    <div class="exist">
+        <h4 class="name">{{desk.desk_name}}</h4>
+        <a href="{% url 'desk_space' id_ws desk.id %}">Перейти</a>
+        <a href="{% url 'deletedesk' id_ws desk.id %}">Удалить</a>
+        <p class="member">Кол-во участников</p>
+    </div>
+        {% endfor %}
+        {% endif %}
+    <div id="popup-overlay">
+        <div id="window">
+            <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+            <h4 class="sign">Новая доска</h4>
+            <form method="POST" action="{% url 'create_desk' id_ws %}">
+                {% csrf_token %}
+            <input class="input-text" type="text" id="input" name="name" placeholder="Введите название">
+            <div>
+                <label style="display: flex;">Тип доски</label>
+            </div>
+
+            <div class="radio-points">
+              <input class="radio-input" type="radio" id="public" name="board-type" value="public">
+              <label for="public">Публичная</label>
+              <input class="radio-input" type="radio" id="private" name="board-type" value="private">
+              <label for="private">Приватная</label>
+            </div>
+            <div>
+                    <label style="display: flex;">Цвет</label>
+                </div>
+
+                <div class="choose-color">
+                   <input style="background-color: #FF0000;" type="radio" id="FF0000" name="color" value="FF0000" class="color-radio" data-color="#FF0000">
+                    <input style="background-color: #0000FF;" type="radio" id="0000FF" name="color" value="0000FF" class="color-radio" data-color="#0000FF">
+                    <input style="background-color: #660000;" type="radio" id="660000" name="color" value="660000" class="color-radio" data-color="#660000">
+                    <input style="background-color: #FF6666;" type="radio" id="FF6666" name="color" value="FF6666" class="color-radio" data-color="#FF6666">
+                    <input style="background-color: #FF9999;" type="radio" id="FF9999" name="color" value="FF9999" class="color-radio" data-color="#FF9999">
+                    <input style="background-color: #FF8000;" type="radio" id="FF8000" name="color" value="FF8000" class="color-radio" data-color="#FF8000">
+                    <input style="background-color: #FFB266;" type="radio" id="FFB266" name="color" value="FFB266" class="color-radio" data-color="#FFB266">
+                    <input style="background-color: #CCCC00;" type="radio" id="CCCC00" name="color" value="CCCC00" class="color-radio" data-color="#CCCC00">
+                    <input style="background-color: #FFFF00;" type="radio" id="FFFF00" name="color" value="FFFF00" class="color-radio" data-color="#FFFF00">
+
+                </div>
+
+            <button class = "type-1" type="submit" name="button">Создать</button>
+            </form>
+
+        </div>
+     </div>
+ <!--       <div class="options">
+            <span class="rp-sign">Тип РП</span>
+            <select id="dropdown">
+                <option value="option1">Публичное</option>
+                <option value="option2">Приватное</option>
+            </select>
+        </div>
+  -->
+
+    </div>
+    </div>
+{% else %}
+    <h1>У вас нет доступа к данной странице,  зарегестрируйтесь или войдите в аккаунт</h1>
+    {% endif %}
+</body>
+</html>

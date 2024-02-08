@@ -1,0 +1,38 @@
+/*@media (min-width: 1200px) {
+  /*-----------------ХЕДЕР----------------*/
+  header.main_page{
+    position: static;
+    display: block;
+    z-index: 0;
+  }
+
+  hr.header-hr{
+    position: absolute;
+    top: 4em;
+    height: 0.063em;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    z-index: inherit;
+  }
+
+  .logo{
+    top: 0.938em;
+    left: 10.188em;
+    z-index: inherit;
+  }
+
+  header button.voiti{
+    position: absolute;
+    top: 0.938em;
+    float: right;
+    right:  10.188em;
+    z-index: inherit;
+  }
+  /*--------------------------------------*/
+  /*-----------Основная часть----------------*/
+  .main_part{
+  margin: 0 5em;
+  }
+  /*--------------------------------------*/
+/*}

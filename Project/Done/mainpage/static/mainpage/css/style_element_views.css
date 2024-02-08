@@ -1,0 +1,289 @@
+/*/////////////////////////////////////////////////////////////////////////////////////
+/////////////ГЛАВНАЯ СТРАНИЦА///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////*/
+
+/*////////ВЕРСИЯ ДЛЯ КОМПЬЮТЕРА////////////////////////////////////////////////////*/
+@media (min-width: 1200px) {
+  /*-----------------ХЕДЕР----------------*/
+  button a{
+  text-decoration:none;
+  color: #3F3F3F;
+  }
+
+  header.main_page{
+    width: auto;
+    height: 3.125em;
+    background: #FFFFFF;
+  }
+
+  hr.header-hr{
+    width: 83%;
+    text-align: center;
+    background-color: #DCDCDC;
+    border: 0px;
+  }
+
+  header img{
+    width: 9.188em;
+    height: 2.563em;
+  }
+
+  header button.voiti{
+    font-family: 'Nunito';
+    font-weight: 400;
+    font-size: 1.4em;
+    text-align: center;
+    background-color: inherit;
+    border: 0px;
+    color: #333333;
+  }
+  /*--------------------------------------*/
+
+  /*-------------ОСНОВНОЙ БЛОК------------*/
+      /*--------Заголовок и текст---------*/
+      div.title-h1 {
+        width: 50%;
+        height: auto;
+      }
+
+      div.title-h1 h1 {
+        font-family: 'Nunito';
+        font-weight: 600;
+        font-size: 3em;
+        text-align: center;
+        color: #333333;
+        text-shadow:
+        1px 1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        -1px -1px 0 #000;
+      }
+
+      div.title-h1 span{
+        color: #B9DED3;
+      }
+
+      div.text{
+        width: 53.125em;
+      }
+
+      div.text p{
+        font-family: 'Nunito';
+        font-weight: 400;
+        font-size: 1.5em;
+        text-align: center;
+        color: #3F3F3F;
+      }
+      /*-----------------------*/
+      /*--------Задний фон---------*/
+      div.background_image img{
+        width: 86.59em;
+        height: 61.563em;
+      }
+          /*-----------BUTTON------------*/
+          button.type-1 {
+            /*----BUTTON----*/
+            width: 10em;
+            height: 2em;
+            background: #B9DED3;
+            border-radius: 30px;
+            border: 0px;
+            transition-duration: 0.4s;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1.5em;
+            text-align: center;
+            color: #3F3F3F;
+            /*----------------*/
+            }
+          button.type-1:hover{
+            /*----BUTTON----*/
+            background: #468270;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            color: #FFFFFF;
+            /*--------------*/
+            }
+          button.type-1:active{
+            /*----BUTTON----*/
+            background: #333333;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            color: #FFFFFF;
+            /*--------------*/
+            }
+          /*----------------------------------*/
+      div.conteiner_for_slaider{
+        width: 57.313em;
+        height: 34em;
+        background: #FFFFFF;
+        /* Тень для блоков */
+        box-shadow: 0px 0px 50px 10px rgba(175, 175, 175, 0.2);
+        border-radius: 30px;
+      }
+      div.circle-pink{
+        width: 10.625em;
+        height: 10.625em;
+        background-color: #FFCCDE;
+        border-radius: 50%;
+      }
+        /*-----------------------*/
+        div.circle-orange{
+          width: 12.5em;
+          height: 12.5em;
+          background-color: #FFCA99;
+          border-radius: 50%;
+          }
+          /*-----------------------*/
+
+      hr.main-block-hr{
+        width: 47.438em;
+        height: 2.5px;
+        background-color: #D1D1D1;
+        border: 0px;
+      }
+
+          div.rectangle-45-1{
+            width: 0.5em;
+            height: 0.5em;
+            background: #FFCA99;
+            transform: rotate(45deg);
+          }
+
+          div.rectangle-45-2{
+            width: 0.5em;
+            height: 0.5em;
+            background: #D1D1D1;
+            transform: rotate(45deg);
+
+          }
+
+          div.rectangle-45-3{
+            width: 0.5em;
+            height: 0.5em;
+            background: #D1D1D1;
+            transform: rotate(45deg);
+          }
+
+          div.rectangle-45-4{
+            width: 0.5em;
+            height: 0.5em;
+            background: #D1D1D1;
+            transform: rotate(45deg);
+          }
+
+      div img.main-slider-img-1{
+        width: 20.375em;
+        height: 20.109em;
+        margin-top: 6.8em;
+        margin-left: 5.063em;
+      }
+
+
+      div.slider-block_text{
+        color: #333333;
+      }
+
+      h3.slider_1{
+        width: 12.625em;
+        font-family: 'Nunito';
+        font-weight: 600;
+        font-size: 2em;
+        text-align: center;
+        margin-bottom: 0em;
+      }
+
+      p.p-1{
+        width: 18em;
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 1.25em;
+        text-align: justify;
+        margin-left: 1.5em;
+      }
+/*--------------------------------------*/
+
+/*////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////*/
+
+/*/////////////////////////////////////////////////////////////////////////////////////
+/////////////СТРАНИЦА ВХОДА///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////*/
+    img.logo-reg{
+      width: 18.75em;
+    }
+
+    img.background-image-reg{
+      width: 80.5em;
+    }
+
+    h3.reg-text-in-block{
+      font-family: 'Nunito';
+      font-weight: 400;
+      font-size: 2em;
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+
+    button.tablinks{
+      text-align: center;
+      width: 11.31em;
+      font-family: "Nunito";
+      font-weight: 400;
+      font-size: 2.2em;
+      background-color: #FFFFFF;
+      border: 0px;
+      border-radius: 30px 30px 0px 0px;
+      box-shadow: 0px 0px 50px 10px rgba(175, 175, 175, 0.2);
+    }
+
+
+
+    div.conteiner-for-registration{
+      background-color: #FFFFFF;
+      padding: 1em 5em 3em 5em;
+      box-shadow: 0px 0px 50px 10px rgba(175, 175, 175, 0.2);
+      border-radius: 0px 0px 30px 30px;
+    }
+
+    input.input-text{
+      height: 3em;
+      width: 100%;
+      border: 1px solid #AFAFAF70;
+      border-radius: 10px;
+      background-color: #B9DED310;
+      padding: 15px;
+      font-size: 1.125em;
+      font-weight: 400;
+      font-family: 'Nunito';
+      color: #AFAFAF;
+    }
+
+    button.proceed{
+      height: 3em;
+      width: 100%;
+      border: 4px solid #B9DED3;
+      border-radius: 10px;
+      background-color: #FFFFFF;
+      padding: 10px 0px;
+      font-size: 1.3em;
+      font-weight: 600;
+      font-family: 'Nunito';
+      color: #3F3F3F;
+    }
+
+.tablinks.active{
+  box-shadow:none;
+}
+.error_message{
+  border: 2px solid red;
+  border-radius: 3px;
+  font-family: 'Nunito';
+}
+
+}

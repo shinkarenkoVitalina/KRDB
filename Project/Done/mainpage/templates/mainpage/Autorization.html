@@ -1,0 +1,54 @@
+{% load static %}
+<! DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'mainpage/css/style_element_views.css' %}">
+        <link rel="stylesheet" href="{% static 'mainpage/css/style_element_positions.css' %}">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+        <title>Done</title>
+        <meta content="text/html; charset=utf-8">
+
+    </head>
+    <body>
+        <main>
+            <img class="logo-reg" src="{% static 'mainpage/img/DONE_logo_edit.svg' %}" alt="">
+            <div>
+              <img class="background-image-reg" src="{% static 'mainpage/img/background_page_login.svg' %}" alt="">
+            </div>
+
+
+                <div class="block-reg">
+                    <div class="tab">
+                     <button class="tablinks" href="/registration" data-target="Регистрация"><a href="/registration">Регистрация</a></button>
+                       <button class="tablinks" href="/autorization" data-target="Вход"><a href="/autorization">Вход</a></button>
+                    </div>
+                      <div class="conteiner-for-registration">
+
+                          <form action="{% url 'authuser' %}" method="post">
+                              {% csrf_token %}
+                          <div class="tabcontent Вход">
+                               {% if mes_err != '' %}
+                            <h3 class="reg-text-in-block">
+                                {{ mes_err}}
+                                <br></h3>
+                              {% else %}
+                              <h3 class="reg-text-in-block">
+                               Укажите адрес электронной почты и пароль
+                                <br></h3>
+                              {% endif %}
+                            <div class="input-LogPas">
+                              <p><input class="input-text" type="email" name="login" placeholder="Адрес эл. почты"></p>
+                              <p><input class="input-text" type="password" name="pass" placeholder="Пароль"></p>
+
+                              <button class="proceed">Продолжить</button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                </div>
+
+
+
+        </main>
+    </body>
+</html>

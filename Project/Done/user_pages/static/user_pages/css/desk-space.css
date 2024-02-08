@@ -1,0 +1,447 @@
+ body {
+  font-family: 'Nunito', sans-serif;
+}
+a{
+    text-decoration: none;
+    color: #333333;
+}
+text-decoration: underline;
+
+ /*-----------------ХЕДЕР----------------*/
+  header.main_page{
+    width: auto;
+    height: 4em;
+  }
+  button a{
+  text-decoration:none;
+  color: #468270;
+  }
+  div a{
+  text-decoration:none;
+  color: #3F3F3F;
+  }
+
+
+  hr.header-hr{
+    width: 90%;
+    text-align: center;
+    background-color: #333333;
+    border: 0px;
+  }
+
+  .logo{
+    font-family: 'Nunito';
+    color: #468270;
+    margin-left:3em;
+    left: 10.188em;
+    z-index: inherit;
+  }
+
+  header button.voiti{
+    font-family: 'Nunito';
+    font-weight: 600;
+    top: 1.2em;
+    font-size: 1.4em;
+    text-align: center;
+    background-color: inherit;
+    border: 0px;
+    color: #468270;
+  }
+  header.main_page{
+    position: static;
+    display: flex;
+    z-index: 0;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  hr.header-hr{
+    position: absolute;
+    top: 4em;
+    height: 0.063em;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    z-index: inherit;
+  }
+
+  .logo{
+    top: 0.938em;
+    left: 10.188em;
+    z-index: inherit;
+  }
+
+  header button.voiti{
+    /*position: absolute;*/
+    top: 1.2em;
+    float: right;
+    right:  10.188em;
+    z-index: inherit;
+    margin-right: 3em;
+
+  }
+  /*--------------------------------------*/
+
+.container {
+  overflow: hidden;/* Чтобы родительский контейнер обтекал своих потомков */
+  margin: 1em 3em 4em 3em;
+}
+
+.sidebar {
+  float: left; /* Размещение боковой колонки слева */
+  width: 12.5em; /* Ширина боковой колонки */
+  background-color: #ffffff; /* Цвет фона боковой колонки */
+  border: 5px solid #B9DED3;
+  border-radius: 30px;
+  padding: 10px; /* Отступы внутри боковой колонки */
+}
+.options{
+    margin-left: 1em;
+}
+
+.main-content {
+  margin-left: 16em; /* Отступ слева, чтобы основное содержимое не перекрывало боковую колонку */
+  padding: 10px; /* Отступы внутри основного содержимого */
+
+}
+
+.main-content::after{
+   content: "";
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 8px;
+  background-color: #000;
+}
+
+select optgroup {
+  border: none;
+}
+select optgroup:before {
+  content: "Рабочие пространства";
+  display: block;
+  font-weight: bold;
+}
+
+h5.sign{
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+}
+
+ul{
+    list-style-type: none;
+    padding: 0;
+}
+li{
+    padding: 3px 0;
+}
+ul li {
+  display: inline-block;
+  vertical-align: middle;
+}
+.icon {
+  vertical-align: middle;
+  padding-right: 5px;
+}
+
+
+  #popup-overlay,  #popup-list{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+
+
+  #window,  #window-list{
+        width: 30em;
+        height: 13em;
+        text-align: center;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+      }
+
+      #popup-overlay:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+
+      #popup-list:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+
+div.column{
+    padding: 1em;
+    box-shadow: 0px 5px 20px 1px #0d0d0d10;
+    border-radius: 15px;
+
+    display: flex;
+    justify-content: space-between;
+    max-height: 100%;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 272px;
+    align-self: start;
+    padding-bottom: 8px;
+    scroll-margin: 8px;
+    white-space: normal;
+    width: 272px;
+    box-sizing: border-box;
+    vertical-align: top;
+
+    margin-right: 10px;
+}
+div.column > * {
+    margin-bottom: 1em;
+}
+
+
+
+.view-card{
+    background-color: #0d0d0d20;
+    border-radius: 15px;
+}
+
+.view-card > *{
+    padding: 0.5em 1em;
+
+}
+
+.color{
+    border-radius: 15px 15px 0 0;
+    background-color: #FF0000;
+}
+
+#popup-exist-card {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+
+
+  #window-card {
+        width: 40em;
+        height: auto;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        margin-top: 3em;
+        margin-bottom: 3em;
+      }
+
+      #popup-exist-card:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+
+.columns-container{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    overflow-x: auto;
+    max-height: 100vh;
+    overflow-y: auto;
+    position: relative;
+    padding: 0 6px;
+}
+
+#board{
+   bottom: 0;
+    left: 0;
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+    right: 0;
+
+    top: 0;
+    -webkit-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+}
+}
+
+.columns-container > *{
+    margin-right: 10px;
+}
+
+#addCardButton, #addListButton{
+    font-family: 'Nunito';
+    font-weight: 600;
+    background-color: inherit;
+    border: 2px #468270 dashed;
+    border-radius: 15px;
+    text-align: center;
+
+}
+
+button.type-1{
+    /*----BUTTON----*/
+            width: 10em;
+            height: 2em;
+            background: #B9DED3;
+            border-radius: 30px;
+            border: 0px;
+            transition-duration: 0.4s;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            font-family: 'Nunito';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 1em;
+            text-align: center;
+            color: #3F3F3F;
+            /*----------------*/
+            }
+          button.type-1:hover{
+            /*----BUTTON----*/
+            background: #468270;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            color: #FFFFFF;
+            /*--------------*/
+            }
+          button.type-1:active{
+            /*----BUTTON----*/
+            background: #333333;
+            /*--------------*/
+            /*----TEXT BUTTON----*/
+            color: #FFFFFF;
+            /*--------------*/
+  }
+.input-text{
+        width: -webkit-fill-available;
+        height: 3em;
+        border: solid #468270;
+        border-width: 0 0 2px 0;
+        margin: 0 2em 4em 2em;
+  }
+  .input-text:focus{
+        background-color: #46827010;
+        border: solid #468270;
+        border-width: 0 0 2px 0;
+        outline: none;
+  }
+
+.card-header{
+    height: 3em;
+    background-color:
+}
+.main-card-part {
+  display: flex;
+}
+.main-card-content {
+  flex: 1;
+}
+.sidebar-content {
+  flex: 0 0 100px; /* Задайте желаемую ширину */
+}
+
+.checklist {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.checklist h4 {
+  margin-bottom: 10px;
+}
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  margin-bottom: 5px;
+}
+
+.checklist-button{
+    background-color: #0d0d0d10;
+    font-family: 'Nunito';
+    border: 0;
+}
+
+.checklist-button:hover{
+    background-color: #0d0d0d30;
+}
+
+.checkbox-input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #468270;
+  border-radius: 0;
+  outline: none;
+  background-color: transparent;
+  margin-right: 10px;
+}
+.checkbox-input:checked {
+  background-color: #468270;
+}
+.checkbox-input:checked::before {
+  content: "\2713";
+  display: block;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 19px;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+label{
+    display: flex;
+    align-items: center;
+}
+.chekbox-points{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 1em;
+}
+
+.descript{
+    max-height: 3em;
+    overflow: hidden;
+}

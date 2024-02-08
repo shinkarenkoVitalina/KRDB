@@ -1,0 +1,77 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'user_pages/css/space_position.css' %}">
+    <link rel="stylesheet" href="{% static 'user_pages/css/space_style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <meta content="text/html; charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Рабочее пространство </title>
+</head>
+<body>
+    {% if request.session.user %}
+    <header class="main_page">
+            <h1 class="logo">DONE</h1>
+            <button class = "voiti" type="button" name="button"><a href="{% url 'logout_user' %}">Выйти</a></button>
+            <hr class="header-hr">
+    </header>
+    <div class="main_part">
+
+    <div>
+        <h2 class="sign">Рабочее пространство</h2>
+    </div>
+    <a href="#popup-overlay" class="link-create-new">
+        <img src="{% static 'user_pages/img/add.png' %}" alt="">Создать новое</a>
+    <div>
+        <h3 class="sign">Ваши рабочие пространства</h3>
+    </div>
+        {% if work_spaces != '' %}
+        {% for workspace in work_spaces %}
+    <div class="exist">
+        <a href="{% url 'desk' workspace.id %}">Перейти</a>
+        <a href="{% url 'deletews' workspace.id %}">Удалить</a>
+        <h4 class="name">{{workspace.name_rp}}</h4>
+        <p class="member">Кол-во участников</p>
+    </div>
+        <div><h1>Редактировать</h1>
+        <input type="text" id="abc" value="{{workspace.name_rp}}">
+        </div>
+        {% endfor %}
+        {% endif %}
+    <div id="popup-overlay">
+        <div id="window">
+            <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+            <h4 class="sign">Новое рабочее пространство</h4>
+            <form method="POST" action="{% url 'create_workspace' %}">
+                {% csrf_token %}
+                <input class="input-text" type="text" id="input" name="name" placeholder="Название рабочего пространства" required>
+
+                <button class="type-1" type="submit">Создать</button>
+            </form>
+        </div>
+     </div>
+        <br>
+        <div>
+
+
+ <!--       <div class="options">
+            <span class="rp-sign">Тип РП</span>
+            <select id="dropdown">
+                <option value="option1">Публичное</option>
+                <option value="option2">Приватное</option>
+            </select>
+        </div>
+  -->
+
+    </div>
+    </div>
+    {% else %}
+    <h1>У вас нет доступа к данной странице,  зарегестрируйтесь или войдите в аккаунт</h1>
+    {% endif %}
+</body>
+</html>
+
+
