@@ -33,4 +33,9 @@ urlpatterns = [
     path('deletews/<int:id_ws>/', views.DeleteSpace, name='deletews'),
     path('deletedesk/<int:id_ws>/<int:id_desk>/', views.DeleteDesk, name = 'deletedesk'),
     path('createcard/<int:id_ws>/<int:desk_id>/<int:list_id>/', views.create_card, name = "createcard"),
+    path('updatews/<int:id_ws>', views.update_space, name = "updatews"),
+    path('updatedesk/<int:id_ws>/<int:desk_id>', views.update_desk, name = "updatedesk"),
+    path('updatedesk_type/<int:id_ws>/<int:desk_id>', views.update_desk_type, name = "updatedesk_type"),
+    path('deletelist/<int:id_ws>/<int:desk_id>/<int:list_id>', views.DeleteList, name = "deletelist"),
+    path('deletetask<int:id_ws><int:desk_id><int:task_id>', views.DeleteTask, name = "deletetask"),
 ]

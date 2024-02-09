@@ -36,9 +36,15 @@
         <h4 class="name">{{workspace.name_rp}}</h4>
         <p class="member">Кол-во участников</p>
     </div>
-        <div><h1>Редактировать</h1>
-        <input type="text" id="abc" value="{{workspace.name_rp}}">
-        </div>
+    <h1>Редактирование</h1>
+        <form method="POST" action="{% url 'updatews' workspace.id %}">
+                {% csrf_token %}
+                <h6>Название</h6>
+                <input class="input-text" type="text" id="input{{workspace.id}}" name="name" value="{{workspace.name_rp}}" required>
+                <h6>Описание</h6>
+                <input class="input-text" type="text" id="input{{workspace.id}}1" name="desc" value="{{workspace.description}}">
+                <button class="type-1" type="submit">Сохранить изменения</button>
+        </form>
         {% endfor %}
         {% endif %}
     <div id="popup-overlay">

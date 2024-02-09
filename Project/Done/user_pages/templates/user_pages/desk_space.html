@@ -45,6 +45,34 @@
         <a href="{% url 'deletedesk' id_ws desk.id %}">Удалить</a>
         <p class="member">Кол-во участников</p>
     </div>
+        <h1>Редактирование</h1>
+        <form method="POST" action="{% url 'updatedesk' id_ws desk.id %}">
+                {% csrf_token %}
+                <h6>Название</h6>
+                <input class="input-text" type="text" id="input{{desk.id}}" name="name" value="{{desk.desk_name}}" required>
+                <h6>Описание</h6>
+                <input class="input-text" type="text" id="input{{desk.id}}1" name="desc" value="{{desk.desk_desc}}">
+            <button class="type-1" type="submit">Сохранить изменения</button>
+            </form>
+             <form method="POST" action="{% url 'updatedesk_type' id_ws desk.id %}">
+                 {% csrf_token %}
+                 <h6>Изменить тип доски</h6>
+                 <p><select name="select" size="2">
+                    <option value="public">Публичная</option>
+                    <option value="privat">Приватная</option>
+                 </select></p>
+                 <button class="type-1" type="submit">Изменить тип</button>
+             </form>
+            <form method="POST" action="">
+                {% csrf_token %}
+                 <h6>Изменить фон доски</h6>
+                 <p><select name="select" size="2">
+                     {% for color in colors%}
+                    <option>{{color.name}}</option>
+                     {% endfor %}
+                 </select></p>
+                 <button class="type-1" type="submit">Изменить фон</button>
+             </form>
         {% endfor %}
         {% endif %}
     <div id="popup-overlay">

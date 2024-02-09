@@ -27,12 +27,14 @@ def GetDeskLists(desk_id):
     query = f"SELECT * FROM Список WHERE id_Доски={desk_id}"
     temps = con.ExecuteReadQuery(query)
     lists = []
+    lists_id = []
     for i in range(len(temps)):
+        lists_id.append(temps[i][3])
         listatr = ['name','date','num','id','desk_id']
         list_space = dict(zip(listatr,temps[i]))
         lists.append(list_space)
     # list_spaces = sorted(lists, key=('num'))
-    return lists, desk_id
+    return lists, desk_id, lists_id
 
 def GerCardList(list_id):
     query = f"SELECT * FROM Карточка WHERE id_Списка={list_id}"
@@ -78,11 +80,20 @@ def desk(request, id_rp):
     data = con.ExecuteReadQuery(query)
     rp_name = data[0][0]
     rp_desc = data[0][1]
-    return render(request, 'user_pages/desk_space.html', {'desk_spaces': desk_spaces, 'id_ws':id_ws, 'rp_name': rp_name,'rp_desc':rp_desc})
+    query = f"SELECT background_color FROM Фон_доски"
+    data = con.ExecuteReadQuery(query)
+    colors = []
+    for i in range(len(data)):
+        tempdt = data[i]
+        temp = {'name': tempdt[0]}
+        colors.append(temp)
+    return render(request, 'user_pages/desk_space.html', {'desk_spaces': desk_spaces, 'id_ws':id_ws, 'rp_name': rp_name,'rp_desc':rp_desc, 'colors': colors})
+
+
 
 def user_desk(request, id_ws, desk_id):
     Desks, id_ws = GetDeskSpaces(id_ws)
-    Lists, desk_id = GetDeskLists(desk_id)
+    Lists, desk_id, lists_id = GetDeskLists(desk_id)
     Tasksinlists = []
     # for list in Lists:
     #     list_id = list['id']
@@ -93,6 +104,7 @@ def user_desk(request, id_ws, desk_id):
          list_id = list['id']
          Taskinlist, list_id = GerCardList(list_id)
          Tasksinlists.append(Taskinlist)
+    # newLists, desk_id = NewGet(desk_id)
     CheckLists = []
     # for task in Tasksinlists:
     #     task_id = task['id']
@@ -139,8 +151,6 @@ def create_workspace(request):
         work_spaces = []
     return render(request, 'user_pages/rp_space.html', {'work_spaces': work_spaces})
 
-
-#
 def create_desk(request, id_ws):
     name = request.POST.get('name')
     description = ''
@@ -171,8 +181,6 @@ def create_list(request, id_ws, desk_id):
     return redirect('desk_space', id_ws, desk_id)
     # return render(request, 'user_pages/user_desk.html', {'desk_spaces': desk_spaces, 'id_ws': id_ws})
 
-
-
 def create_card(request, id_ws, desk_id, list_id):
     name = request.POST.get('name')
     if (name==''):
@@ -193,7 +201,7 @@ def create_card(request, id_ws, desk_id, list_id):
 
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
-
+# ///
 def create_checklist(request, id_ws, desk_id, card_id):
     # name = request.POST.get('name')
     # data = datetime.datetime.now()
@@ -202,7 +210,7 @@ def create_checklist(request, id_ws, desk_id, card_id):
     # con.ExecuteQuery(query)
     # return redirect('desk_space', f'{id_ws}', f'{desk_id}')
     pass
-
+# ///
 def create_task(request, id_ws, desk_id, checklist_id):
     # name = request.POST.get('name')
     # data = datetime.datetime.now()
@@ -212,7 +220,7 @@ def create_task(request, id_ws, desk_id, checklist_id):
     # con.ExecuteQuery(query)
     # return redirect('desk_space', f'{id_ws}', f'{desk_id}')
     pass
-
+# ///
 def create_mark(request, id_ws, desk_id):
     # name = request.POST.get('name')
     # # color = ???
@@ -225,22 +233,37 @@ def create_mark(request, id_ws, desk_id):
     # return redirect('desk_space', f'{id_ws}', f'{desk_id}')
     pass
 
-def update_space(request, space_id):
-    # name = request.POST.get('name')
-    # desc = request.POST.get('desc')
-    # if(name):
-    #     if(desc):
-    #         query = f"UPDATE Рабочее_пространство SET Название = '{name}', Описание = '{desc}' WHERE id = {space_id}"
-    #     else:
-    #         query = f"UPDATE Рабочее_пространство SET Название = '{name}' WHERE id = {space_id}"
-    # if(desc):
-    #     query = f"UPDATE Рабочее_пространство SET Описание = '{desc}' WHERE id = {space_id}"
-    # con.ExecuteQuery(query)
-    # return redirect('rp_space')
-    pass
+def update_space(request, id_ws):
+    name = request.POST.get('name')
+    desc = request.POST.get('desc')
+    print(name)
+    print(desc)
+    if(not name):
+        return redirect('rp_space')
+    query = f"UPDATE Рабочее_пространство SET Название = '{name}', Описание = '{desc}' WHERE id = {id_ws}"
+    print('2')
+    con.ExecuteQuery(query)
+    print('3')
+    return redirect('rp_space')
 
-def update_desk(request, space_id, desk_id):
-    pass
+def update_desk(request, id_ws, desk_id):
+    name = request.POST.get('name')
+    desc = request.POST.get('desc')
+    if(not name):
+        return redirect('desk', id_ws)
+    query = f"UPDATE Доска SET Название = '{name}', Описание = '{desc}' WHERE id = {desk_id}"
+    con.ExecuteQuery(query)
+    return redirect('desk', id_ws)
+
+def update_desk_type(request, id_ws, desk_id):
+    typed = request.POST.get('select')
+    if(typed=='privat'):
+        typed = 'приватная'
+    else:
+        typed = 'публичная'
+    query = f"UPDATE Доска SET Тип = '{typed}' WHERE id = {desk_id}"
+    con.ExecuteQuery(query)
+    return redirect('desk', id_ws)
 
 def update_list(request, space_id, desk_id, list_id):
     pass
@@ -273,8 +296,8 @@ def DeleteList(request, id_ws, desk_id, list_id):
     con.ExecuteQuery(query)
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
-def DeleteCard(request, id_ws, desk_id, card_id):
-    query = f"DELETE FROM Карточка WHERE id = {card_id};"
+def DeleteTask(request, id_ws, desk_id, task_id):
+    query = f"DELETE FROM Карточка WHERE id = {task_id};"
     con.ExecuteQuery(query)
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 

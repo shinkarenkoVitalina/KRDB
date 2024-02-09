@@ -56,7 +56,17 @@
                     {% if Lists %}
                     {% for list in Lists%}
                     <div class="column">
+                        <div class="list-head">
                             <h4 class="sign">{{list.name}}</h4>
+                             <div class="dropdown">
+                                <button class="dropbtn"><img src="{% static 'user_pages/img/dots.png' %}" alt=""></button>
+                                <div class="dropdown-content">
+                                  <a href="#">Редактировать</a>
+                                  <a href="#">Переместить</a>
+                                  <a href="{% url 'deletelist' id_ws desk_id list.id %}">Удалить</a>
+                                </div>
+                             </div>
+                        </div>
                     <!--
                         <div id="inputContainer">
                           <input type="text" id="inputField">
@@ -75,42 +85,52 @@
                                     </form>
                             </div>
                         </div>
+
                         <a href="#popup-overlay{{list.id}}" id="addCardButton" class="link-create-new">Добавить карточку</a>
                         {%  if Tasksinlists %}
                         {% for tasks in Tasksinlists %}
                         {% for task in tasks %}
                         {% if task.list_id == list.id %}
-                        <a href="#popup-exist-card" class="exist-card">
+                        <a href="#popup-exist-card{{task.id}}" class="exist-card">
+
                             <div class="view-card">
                                 <div class="color" style="background-color: {{ header_color }};">
-                                    {% if task.deadline %}
-                                    {% if mes_err %}
-                                    <span>{{ mes_err }}</span>
-                                    {% else %}
-                                    <span>{{task.dedline}}</span>
-                                    {% endif %}
-                                    {% else %}
-                                    <span></span>
-                                    {% endif %}
+                                    <div class="list-head">
+                                        {% if task.deadline %}
+                                        <span>{{task.dedline}}</span>
+                                        {% endif %}
+                                        <div class="dropdown">
+                                            <button class="dropbtn"><img src="{% static 'user_pages/img/dots.png' %}" alt=""></button>
+                                            <div class="dropdown-content">
+                                              <a href="#">Переместить</a>
+                                              <a href="{% url 'deletetask' id_ws desk_id task.id %}">Удалить</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="main-part">
                                     <span>{{task.name}}</span>
                                 </div>
                             </div>
+
                         </a>
                         {% endif %}
                         {% endfor %}
                         {% endfor %}
                         {% endif %}
 
-                        {% if Tasksinlists %}
-                        {% for tasks in Tasksinlists %}
-                        {% for task in tasks %}
-                        {% if task.list_id == list.id %}
+                    {%  if Tasksinlists %}
+                    {% for tasks in Tasksinlists %}
+                    {% for task in tasks %}
+                    {% if task.list_id == list.id %}
                         <div id="popup-exist-card{{task.id}}">
                             <div id="window-card{{task.id}}">
+
                                 <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+
                                 <div class="cover"></div>
+
                                 <div class="main-card-part">
                                     <div class="main-card-content">
                                         <div class="card-header"></div>
@@ -171,11 +191,13 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         {% endif %}
-                        {% endfor %}
-                        {% endfor %}
-                        {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                    {% endif %}
+
                 </div>
                     {% endfor %}
                     {% endif %}
