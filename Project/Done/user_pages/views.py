@@ -27,27 +27,69 @@ def GetDeskLists(desk_id):
     query = f"SELECT * FROM Список WHERE id_Доски={desk_id}"
     temps = con.ExecuteReadQuery(query)
     lists = []
-    lists_id = []
+    # lists_id = []
     for i in range(len(temps)):
-        lists_id.append(temps[i][3])
+        # lists_id.append(temps[i][3])
         listatr = ['name','date','num','id','desk_id']
         list_space = dict(zip(listatr,temps[i]))
         lists.append(list_space)
     # list_spaces = sorted(lists, key=('num'))
-    return lists, desk_id, lists_id
+    # lists_id = tuple(lists_id)
+    return lists
 
-def GerCardList(list_id):
+def GetCardList(list_id):
+    # if(lists_id):
+    #     if(type(lists_id)!=int):
+    #         query = f"SELECT * FROM Карточка WHERE id_Списка in {lists_id}"
+    #     else:
+    #         query = f"SELECT * FROM Карточка WHERE id_Списка = {lists_id}"
+    #     temps = con.ExecuteReadQuery(query)
+    #     tasks = []
+    #     tasks_id = []
+    #     if (temps):
+    #         for i in range(len(temps)):
+    #             tasks_id.append(temps[i][6])
+    #             listatr = ['name', 'desc', 'date', 'dedline', 'num', 'check', 'id', 'list_id']
+    #             task = dict(zip(listatr, temps[i]))
+    #             tasks.append(task)
+    #         # task_spaces = sorted(tasks, key=('num'))
+    #         tasks_id = tuple(tasks_id)
+    # else:
+    #     tasks = []
+    #     tasks_id = []
+    # return tasks, tasks_id
+
     query = f"SELECT * FROM Карточка WHERE id_Списка={list_id}"
     temps = con.ExecuteReadQuery(query)
     tasks = []
     for i in range(len(temps)):
-        listatr = ['name','desc','date','dedline','num','check','id','list_id']
-        task = dict(zip(listatr,temps[i]))
+        listatr = ['name', 'desc', 'date', 'dedline', 'num', 'check', 'id', 'list_id']
+        task = dict(zip(listatr, temps[i]))
         tasks.append(task)
     # task_spaces = sorted(tasks, key=('num'))
-    return tasks, list_id
+    return tasks
 
-def GetCheckList(task_id):
+def GetCheckLists(task_id):
+    # if(tasks_id):
+    #     if(type(tasks_id)!=int):
+    #         query = f"""SELECT * FROM "Чек-лист" WHERE id_Карточки in {tasks_id}"""
+    #     else:
+    #         query = f"""SELECT * FROM "Чек-лист" WHERE id_Карточки = {tasks_id}"""
+    #     temps = con.ExecuteReadQuery(query)
+    #     checklists = []
+    #     checklists_id = []
+    #     if (temps):
+    #         for i in range(len(temps)):
+    #             checklists_id.append(temps[i][3])
+    #             listatr = ['name', 'check', 'date', 'id', 'task_id']
+    #             checklist = dict(zip(listatr, temps[i]))
+    #             checklists.append(checklist)
+    #         checklists_id = tuple(checklists_id)
+    # else:
+    #     checklists = []
+    #     checklists_id = []
+    # return checklists, checklists_id
+
     query = f"""SELECT * FROM "Чек-лист" WHERE id_Карточки={task_id}"""
     temps = con.ExecuteReadQuery(query)
     checklists = []
@@ -55,17 +97,35 @@ def GetCheckList(task_id):
         listatr = ['name', 'check', 'date', 'id', 'task_id']
         checklist = dict(zip(listatr, temps[i]))
         checklists.append(checklist)
-    return checklists, task_id
+    return checklists
 
-def GetTaskList(cl_id):
-    query = f"""SELECT * FROM Действие WHERE "id_Чек-листа"={cl_id}"""
+def GetActionLists(checklist_id):
+    # if(checklists_id):
+    #     if(type(checklists_id)!=int):
+    #         query = f"""SELECT * FROM Действие WHERE "id_Чек-листа" in {checklists_id}"""
+    #     else:
+    #         query = f"""SELECT * FROM Действие WHERE "id_Чек-листа" = {checklists_id}"""
+    #     temps = con.ExecuteReadQuery(query)
+    #     Actions = []
+    #     actions_id = []
+    #     if(temps):
+    #         for i in range(len(temps)):
+    #             actions_id.append(temps[i][4])
+    #             listatr = ['name', 'check', 'date', 'dedline', 'id', 'cl_id']
+    #             action = dict(zip(listatr, temps[i]))
+    #             Actions.append(action)
+    # else:
+    #     Actions = []
+    # return Actions
+
+    query = f"""SELECT * FROM Действие WHERE "id_Чек-листа"={checklist_id}"""
     temps = con.ExecuteReadQuery(query)
-    issues = []
-    for i in range(len(temps)):
+    actions = []
+    for i in range(len(actions)):
         listatr = ['name', 'check', 'date', 'dedline', 'id', 'cl_id']
-        issue = dict(zip(listatr, temps[i]))
-        issues.append(issue)
-    return issues, cl_id
+        action = dict(zip(listatr, temps[i]))
+        actions.append(action)
+    return actions
 def index(request):
     if(request.session.keys()):
         user_mail = request.session['user']
@@ -90,41 +150,95 @@ def desk(request, id_rp):
     return render(request, 'user_pages/desk_space.html', {'desk_spaces': desk_spaces, 'id_ws':id_ws, 'rp_name': rp_name,'rp_desc':rp_desc, 'colors': colors})
 
 
+def NormalizeDeskView(lists):
+    newlist = sorted(lists, key=lambda d: d['num'])
+    num = 0
+    for item in newlist:
+        num += 1
+        item_id = item['id']
+        query = f"UPDATE Список SET Номер_на_доске = {num} WHERE id = {item_id}"
+        con.ExecuteQuery(query)
+
+def NormalizeListView(tasks):
+    newlist = sorted(tasks, key=lambda d: d['num'])
+    num = 0
+    for item in newlist:
+        num += 1
+        item_id = item['id']
+        query = f"UPDATE Карточка SET Номер_в_списке = {num} WHERE id = {item_id}"
+        con.ExecuteQuery(query)
+
 
 def user_desk(request, id_ws, desk_id):
+    # Desks, id_ws = GetDeskSpaces(id_ws)
+    # Lists, lists_id = GetDeskLists(desk_id)
+    # if(Lists):
+    #     NormalizeDeskView(Lists)
+    #     for list in Lists:
+    #         list_id = list['id']
+    #         ttasks, task_id = GetCardList(list_id)
+    #         if(ttasks):
+    #             NormalizeListView(ttasks)
+    # Tasks, tasks_id = GetCardList(lists_id)
+    # Clists, clists_id = GetCheckLists(tasks_id)
+    # Actions = GetActionLists(clists_id)
+    # query = f"SELECT Название, Описание FROM Доска WHERE id = {desk_id}"
+    # desk_data = con.ExecuteReadQuery(query)
+    # desk_name = desk_data[0][0]
+    # desk_desc = desk_data[0][1]
+
+
     Desks, id_ws = GetDeskSpaces(id_ws)
-    Lists, desk_id, lists_id = GetDeskLists(desk_id)
+    Lists = GetDeskLists(desk_id)
+    NormalizeDeskView(Lists)
     Tasksinlists = []
-    # for list in Lists:
-    #     list_id = list['id']
-    #     Taskinlist = GerCardList(list_id)
-    #     temp = {f'{list_id}': Taskinlist}
-    #     Tasksinlists.append(temp)
-    for list in Lists:
-         list_id = list['id']
-         Taskinlist, list_id = GerCardList(list_id)
-         Tasksinlists.append(Taskinlist)
-    # newLists, desk_id = NewGet(desk_id)
     CheckLists = []
+    ActionList = []
+    for list in Lists:
+        list_id = list['id']
+        Taskinlist = GetCardList(list_id)
+        NormalizeListView(Taskinlist)
+        Tasksinlists.append(Taskinlist)
+        for task in Taskinlist:
+            task_id = task['id']
+            Checklist = GetCheckLists(task_id)
+            CheckLists.append(Checklist)
+            for checklist in Checklist:
+               cl_id = checklist['id']
+               action = GetActionLists(cl_id)
+               ActionList.append(action)
+
+    #     Tasksinlists.append(Taskinlist)
+    # CheckLists = []
     # for task in Tasksinlists:
+    #     print(task[0])
     #     task_id = task['id']
-    #     Checklist = GetCheckList(task_id)
-    #     temp = {f'{task_id}':Checklist}
-    #     CheckLists.append(temp)
+    #     Checklist = GetCheckLists(task_id)
+    # #     temp = {f'{task_id}':Checklist}
+    #     CheckLists.append(Checklist)
     # ActionList = []
     # for checklist in CheckLists:
     #     cl_id = checklist['id']
-    #     action = GetTaskList(cl_id)
-    #     temp = {f'{cl_id}': action}
-    #     ActionList.append(temp)
-    # query = f"SELECT Название FROM Доска WHERE id = {desk_id}"
-    # desk_name = con.ExecuteReadQuery(query)
-    # desk_name = desk_name[0][0]
-    # # return Lists, Tasksinlists, CheckLists, ActionList
-    # return render(request, 'user_pages/user_desk.html', {'Lists':Lists,'desk_id':desk_id, 'id_ws':id_ws, 'desk_name':desk_name,
-    #     'Desks':Desks, 'Tasksinlists':Tasksinlists, 'CheckLists':CheckLists, 'ActionList':ActionList})
-    return render(request, 'user_pages/user_desk.html',
-                  {'Lists': Lists, 'desk_id': desk_id, 'id_ws': id_ws, 'Tasksinlists':Tasksinlists})
+    #     action = GetActionLists(cl_id)
+    # #     temp = {f'{cl_id}': action}
+    #     ActionList.append(action)
+    query = f"SELECT Название FROM Доска WHERE id = {desk_id}"
+    desk_data = con.ExecuteReadQuery(query)
+    data = desk_data[0]
+    if(len(data)>1):
+        desk_name = data[0]
+        desk_desc = data[1]
+    else:
+        desk_name = data[0]
+        desk_desc = ''
+    # return Lists, Tasksinlists, CheckLists, ActionList
+    return render(request, 'user_pages/user_desk.html', {'Lists':Lists,'desk_id':desk_id, 'id_ws':id_ws, 'desk_name':desk_name, 'desk_desc':desk_desc,
+        'Desks':Desks, 'Tasksinlists':Tasksinlists, 'CheckLists':CheckLists, 'ActionList':ActionList})
+    # return render(request, 'user_pages/user_desk.html',
+    #               {'Lists': Lists, 'desk_id': desk_id, 'id_ws': id_ws, 'Tasksinlists': Tasksinlists})
+
+    # return render(request, 'user_pages/user_desk.html',
+    #               {'Lists': Lists, 'desk_id': desk_id, 'id_ws': id_ws, 'Tasks':Tasks, 'Clists':Clists, 'Actions':Actions, 'desk_name':desk_name, 'desk_desc':desk_desc})
 
 def card_header_view(request):
     header_color = '#FF0000'  # Цвет шапки карточки
@@ -203,23 +317,20 @@ def create_card(request, id_ws, desk_id, list_id):
 
 # ///
 def create_checklist(request, id_ws, desk_id, card_id):
-    # name = request.POST.get('name')
-    # data = datetime.datetime.now()
-    # check = False
-    # query = f"""INSERT INTO (Название, Статус_выполнения, Дата_создания, id_Карточки) VALUES ('{name}', {check}, '{data}', {card_id})"""
-    # con.ExecuteQuery(query)
-    # return redirect('desk_space', f'{id_ws}', f'{desk_id}')
-    pass
+    name = request.POST.get('label-name')
+    data = datetime.datetime.now()
+    check = False
+    query = f"""INSERT INTO "Чек-лист"(Название, Статус_выполнения, Дата_создания, id_Карточки) VALUES ('{name}', {check}, '{data}', {card_id})"""
+    con.ExecuteQuery(query)
+    return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 # ///
-def create_task(request, id_ws, desk_id, checklist_id):
-    # name = request.POST.get('name')
-    # data = datetime.datetime.now()
-    # deadline = ''
-    # check = False
-    # query = f"INSERT INTO Действие(Название, Статус_выполнения, Дата_создания, Дедлайн, 'id_Чек-листа') VALUES ('{name}', {check}, '{data}', '{deadline}', {checklist_id})"
-    # con.ExecuteQuery(query)
-    # return redirect('desk_space', f'{id_ws}', f'{desk_id}')
-    pass
+def create_action(request, id_ws, desk_id, checklist_id):
+    name = request.POST.get('name')
+    data = datetime.datetime.now()
+    check = False
+    query = f"""INSERT INTO Действие(Название, Статус_выполнения, Дата_создания, "id_Чек-листа") VALUES ('{name}', {check}, '{data}', {checklist_id})"""
+    con.ExecuteQuery(query)
+    return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 # ///
 def create_mark(request, id_ws, desk_id):
     # name = request.POST.get('name')
@@ -330,3 +441,19 @@ def SortForDeadline(request, id_ws, desk_id, list_id):
     # заапдейтить бд
     pass
 
+def SortListInDesk(Lists):
+
+    pass
+
+def SortTaskInList(TaskList):
+    pass
+
+def GetDeadlineTask(request, id_ws, desk_id, task_id):
+    date = request.POST.get('date')
+    time = request.POST.get('time')
+    print(date)
+    print(time)
+    deadline = date+' '+time
+    query = f"UPDATE Карточка SET Дедлайн = '{deadline}' WHERE id = {task_id}"
+    con.ExecuteQuery(query)
+    return redirect('desk_space', f'{id_ws}', f'{desk_id}')

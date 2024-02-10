@@ -61,11 +61,54 @@
                              <div class="dropdown">
                                 <button class="dropbtn"><img src="{% static 'user_pages/img/dots.png' %}" alt=""></button>
                                 <div class="dropdown-content">
-                                  <a href="#">Редактировать</a>
-                                  <a href="#">Переместить</a>
+                                  <a href="#popup-change{{list.id}}">Редактировать</a>
+                                  <a href="#popup-replace{{list.id}}">Переместить</a>
                                   <a href="{% url 'deletelist' id_ws desk_id list.id %}">Удалить</a>
                                 </div>
                              </div>
+                        </div>
+
+                        <div id="popup-change{{list.id}}">
+                            <div id="window-change{{list.id}}">
+                                <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+                                <h4 class="sign">Редактировать</h4>
+                                <form method="post" action="">
+                                    <input class="input-text" type="text" name = "name" id="input-name" placeholder="Название">
+                                    <input class="input-text" type="text" name = "name" id="input-desc" placeholder="Описание">
+                                    <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div id="popup-replace{{list.id}}">
+                            <div id="window-replace{{list.id}}">
+                                <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
+                                <h4 class="sign">Переместить список "название"</h4>
+                                <form method="post" action="">
+                                    <label for="desks">Название доски
+                                      <select id="desks" name="desks">
+                                        <option value="#">Первая</option>
+                                        <option value="#">...</option>
+                                        <option value="#">...</option>
+                                      </select>
+                                    </label>
+                                    <label for="lists">Название списка
+                                      <select id="lists" name="lists">
+                                        <option value="#">Первый</option>
+                                        <option value="#">...</option>
+                                        <option value="#">...</option>
+                                      </select>
+                                    </label>
+                                    <label for="number">Номер в списке
+                                      <select id="number" name="number">
+                                        <option value="first">1</option>
+                                        <option value="second">2</option>
+                                        <option value="third">3</option>
+                                      </select>
+                                    </label>
+                                    <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                </form>
+                            </div>
                         </div>
                     <!--
                         <div id="inputContainer">
@@ -87,9 +130,9 @@
                         </div>
 
                         <a href="#popup-overlay{{list.id}}" id="addCardButton" class="link-create-new">Добавить карточку</a>
-                        {%  if Tasksinlists %}
-                        {% for tasks in Tasksinlists %}
-                        {% for task in tasks %}
+                        {% if Tasksinlists %}
+                        {% for temp in Tasksinlists %}
+                        {% for task in temp %}
                         {% if task.list_id == list.id %}
                         <a href="#popup-exist-card{{task.id}}" class="exist-card">
 
@@ -120,10 +163,10 @@
                         {% endfor %}
                         {% endif %}
 
-                    {%  if Tasksinlists %}
-                    {% for tasks in Tasksinlists %}
-                    {% for task in tasks %}
-                    {% if task.list_id == list.id %}
+                        {% if Tasksinlists %}
+                        {% for temp in Tasksinlists %}
+                        {% for task in temp %}
+                        {% if task.list_id == list.id %}
                         <div id="popup-exist-card{{task.id}}">
                             <div id="window-card{{task.id}}">
 
@@ -146,55 +189,135 @@
                                         <div class="label">
                                             <h5>Название метки</h5>
                                         </div>
+                                        {% if CheckLists %}
+                                        {% for temp in CheckLists %}
+                                        {% for checklist in temp %}
+                                        {% if checklist.task_id == task.id %}
                                         <ul class="checklist">
                                             <div class="button-group">
-                                                <h4>название задачи</h4>
+                                                <h4>{{checklist.name}}</h4>
                                                 <div class="buttons">
                                                     <button class="checklist-button">Редактировать</button>
                                                     <button class="checklist-button"><a href="">Удалить</a></button>
                                                 </div>
                                             </div>
                                             <div class="chekbox-points">
+                                                {% if ActionList %}
+                                                {% for temp in ActionList %}
+                                                {% for action in temp %}
+                                                {% if action.cl_id == checklist.id %}
                                                 <li>
                                                   <label>
                                                     <input class="checkbox-input" type="checkbox">
                                                     Пункт 1
                                                   </label>
                                                 </li>
-                                                <li>
-                                                  <label>
-                                                    <input class="checkbox-input" type="checkbox">
-                                                    Пункт 2
-                                                  </label>
-                                                </li>
-                                                <li>
-                                                  <label>
-                                                    <input class="checkbox-input" type="checkbox">
-                                                    Пункт 3
-                                                  </label>
-                                                </li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% endif %}
                                             <!-- Добавьте дополнительные пункты чек-листа -->
                                             </div>
 
+                                            <div class="dropdown-checklist-button">
+                                                <button style="margin-left: 1em" class="dropbtn-checklist-button">Добавить пункт</button>
+                                                <div class="dropdown-content-checklist-button">
+                                                    <form class="form" method="post" action="{% url 'createaction' id_ws desk_id checklist.id %}">
+                                                        {% csrf_token %}
+                                                        <input class="input-text" type="text" name = "label-name" id="input-point-name{{checklist.id}}" placeholder="Название">
+                                                        <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
                                           </ul>
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endfor %}
+                                        {% endif %}
                                     </div>
                                     <div class="sidebar-content">
                                         <h5>Связанные карточки</h5>
-                                            <a href="">Карточка 1</a>
-                                            <a href="">Карточка 2</a>
+                                            <a style="margin-left: 10px" href="">Карточка 1</a>
+                                            <a style="margin-left: 10px" href="">Карточка 2</a>
+                                            <div class="dropdown-checklist-button">
+                                                    <button class="dropbtn-checklist-button">Привязать карточку</button>
+                                                    <div class="dropdown-content-checklist-button">
+                                                        <form class="form" method="post" action="">
+                                                            {% csrf_token %}
+                                                            <label>
+                                                                <input type="checkbox" name="languages" value="">
+                                                                Название карточки
+                                                            </label>
+                                                            <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                        </form>
+                                                    </div>
+                                            </div>
                                         <h5>Добавить на карточку</h5>
-                                            <button class="checklist-button">Участники</button>
-                                            <button class="checklist-button">Метки</button>
-                                            <button class="checklist-button">Чек-лист</button>
-                                            <button class="checklist-button">Даты</button>
-                                            <button class="checklist-button">Вложения</button>
+                                            <div class="dropdown-checklist-button">
+                                                <button class="dropbtn-checklist-button">Участники</button>
+
+                                                    <div class="dropdown-content-checklist-button">
+                                                    <form class="form" method="post" action="">
+                                                        {% csrf_token %}
+                                                        <label>
+                                                            <input type="checkbox" name="languages" value="">
+                                                            Имя участника (почта участника)
+                                                        </label>
+                                                        <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                    </form>
+                                                    </div>
+
+                                            </div>
+
+                                            <div class="dropdown-checklist-button">
+                                                <button class="dropbtn-checklist-button">Метки</button>
+                                                <div class="dropdown-content-checklist-button">
+                                                    <form class="form" method="post" action="">
+                                                        {% csrf_token %}
+                                                        <input class="input-text" type="text" name = "label-name" id="input-label-name{{task.id}}" placeholder="Название">
+                                                        <label style="display: flex;">Цвет</label>
+                                                        <div class="choose-color">
+                                                           <input style="background-color: #FF0000;" type="radio" id="FF0000" name="color" value="FF0000" class="color-radio" data-color="#FF0000">
+                                                        </div>
+                                                        <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="dropdown-checklist-button">
+                                                <button class="dropbtn-checklist-button">Дедлайн</button>
+                                                <div class="dropdown-content-checklist-button">
+                                                    <form class="form" method="post" action="{% url 'getdeadline' id_ws desk_id task.id %}">
+                                                        {% csrf_token %}
+                                                        <input type="date" class="form-control w-25" id="input_value3{{task.id}}" name="date"><br>
+                                                        <label for="time{{task.id}}">Время: </label>
+                                                        <input type="time" id="time{{task.id}}" name="time"/>
+                                                        <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <div class="dropdown-checklist-button">
+                                                    <button class="dropbtn-checklist-button">Чек-лист</button>
+                                                    <div class="dropdown-content-checklist-button">
+                                                        <form class="form" method="post" action="{% url 'createchecklist' id_ws desk_id task.id %}">
+                                                            {% csrf_token %}
+                                                            <input class="input-text" type="text" name = "label-name" id="input-checklist-name{{task.id}}" placeholder="Название">
+                                                            <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                        </form>
+                                                    </div>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
 
                         </div>
+
+
+
                         {% endif %}
-                    {% endfor %}
+                        {% endfor %}
                     {% endfor %}
                     {% endif %}
 

@@ -36,6 +36,9 @@ urlpatterns = [
     path('updatews/<int:id_ws>', views.update_space, name = "updatews"),
     path('updatedesk/<int:id_ws>/<int:desk_id>', views.update_desk, name = "updatedesk"),
     path('updatedesk_type/<int:id_ws>/<int:desk_id>', views.update_desk_type, name = "updatedesk_type"),
-    path('deletelist/<int:id_ws>/<int:desk_id>/<int:list_id>', views.DeleteList, name = "deletelist"),
-    path('deletetask<int:id_ws><int:desk_id><int:task_id>', views.DeleteTask, name = "deletetask"),
+    path('deletelist/<int:id_ws>/<int:desk_id>/<int:list_id>/', views.DeleteList, name = "deletelist"),
+    path('deletetask/<int:id_ws>/<int:desk_id>/<int:task_id>/', views.DeleteTask, name = "deletetask"),
+    path('createchecklist/<int:id_ws>/<int:desk_id>/<int:card_id>/', views.create_checklist, name = "createchecklist"),
+    path('getdeadline/<int:id_ws>/<int:desk_id>/<int:task_id>/', views.GetDeadlineTask, name = "getdeadline"),
+    path('createaction/<int:id_ws>/<int:desk_id>/<int:checklist_id>/', views.create_action, name = 'createaction'),
 ]

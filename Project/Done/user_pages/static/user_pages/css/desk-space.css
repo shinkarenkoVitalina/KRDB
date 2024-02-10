@@ -447,7 +447,7 @@ label{
 }
 
 .list-head{
-        display: flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
@@ -490,4 +490,67 @@ label{
 
   .dropdown:hover .dropbtn {
     background-color: inherit;
+  }
+  div[id^='popup-change'], div[id^='popup-replace'] {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+
+
+  div[id^='window-change'], div[id^='window-replace']  {
+        width: 40em;
+        height: auto;
+        padding: 15px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        margin-top: 3em;
+        margin-bottom: 3em;
+      }
+/*-----------------------------------------------------*/
+   .dropbtn-checklist-button{
+    background-color: #0d0d0d10;
+    font-family: 'Nunito';
+    border: 0;
+    border: none;
+    margin-bottom: 1em;
+  }
+
+  .dropdown-checklist-button{
+    position: relative;
+    display: inline-block;
+    font-size: 14px;
+    width: auto;
+  }
+
+  .dropdown-content-checklist-button{
+    display: none;
+    padding: 1em;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .form > *{
+    margin-bottom: 10px;
+  }
+
+  .dropdown-checklist-button:hover .dropdown-content-checklist-button{
+    display: inline-block;
+  }
+
+  .dropdown-checklist-button:hover .dropbtn-checklist-button{
+    background-color: #0d0d0d30;
   }

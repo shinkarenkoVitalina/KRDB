@@ -51,7 +51,7 @@ def IsValid(name, email):
 def SendMail(email, token):
     print("sendmail")
     mail_from = "taskmanagerdone2@gmail.com"
-    mail_to = "alexzoombie036@gmail.com"
+    mail_to = "taskmanagerdone2@gmail.com"
     # mail_to = f'{email}'
     password = "nssq wqfm qoyt rqte"
     server = smtplib.SMTP("smtp.gmail.com", 587)
