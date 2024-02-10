@@ -197,5 +197,12 @@ body {
             color: #FFFFFF;
             /*--------------*/
   }
+  .view-block{
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2em;
+    border: 4px #FFCCDE dashed;
+    border-radius: 30px;
+  }
   /*--------------------------------------*/
  /*}

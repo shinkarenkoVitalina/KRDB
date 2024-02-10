@@ -41,4 +41,7 @@ urlpatterns = [
     path('createchecklist/<int:id_ws>/<int:desk_id>/<int:card_id>/', views.create_checklist, name = "createchecklist"),
     path('getdeadline/<int:id_ws>/<int:desk_id>/<int:task_id>/', views.GetDeadlineTask, name = "getdeadline"),
     path('createaction/<int:id_ws>/<int:desk_id>/<int:checklist_id>/', views.create_action, name = 'createaction'),
+    path('deletechecklist/<int:id_ws><int:desk_id><int:task_id>', views.DeleteChecklist, name = 'deletechecklist'),
+    path('updatechecklist/<int:id_ws><int:desk_id><int:checklist_id>', views.update_checklist, name = "updatechecklist"),
+    path('updatelist/<int:id_ws><int:desk_id><int:list_id>', views.update_list, name = "updatelist"),
 ]

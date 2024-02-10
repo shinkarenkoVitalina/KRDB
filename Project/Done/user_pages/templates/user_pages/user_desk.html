@@ -72,9 +72,9 @@
                             <div id="window-change{{list.id}}">
                                 <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
                                 <h4 class="sign">Редактировать</h4>
-                                <form method="post" action="">
-                                    <input class="input-text" type="text" name = "name" id="input-name" placeholder="Название">
-                                    <input class="input-text" type="text" name = "name" id="input-desc" placeholder="Описание">
+                                <form method="post" action="{% url 'updatelist' id_ws desk_id list.id %}">
+                                    {% csrf_token %}
+                                    <input class="input-text" type="text" name = "name" id="input-name" value="{{list.name}}" placeholder="Название">
                                     <button class = "type-1" type="submit" name="button">Сохранить</button>
                                 </form>
                             </div>
@@ -83,20 +83,21 @@
                         <div id="popup-replace{{list.id}}">
                             <div id="window-replace{{list.id}}">
                                 <a href="#" class="close"><img src="{% static 'user_pages/img/close.png' %}" alt=""></a>
-                                <h4 class="sign">Переместить список "название"</h4>
+                                <h4 class="sign">Переместить список {{list.name}}</h4>
                                 <form method="post" action="">
                                     <label for="desks">Название доски
                                       <select id="desks" name="desks">
-                                        <option value="#">Первая</option>
-                                        <option value="#">...</option>
-                                        <option value="#">...</option>
+                                          {% for desk in Desks %}
+                                        <option value="{{desk.name}}">{{desk.name}}</option>
                                       </select>
                                     </label>
-                                    <label for="lists">Название списка
+                                    <label for="lists">Номер на доске
                                       <select id="lists" name="lists">
-                                        <option value="#">Первый</option>
-                                        <option value="#">...</option>
-                                        <option value="#">...</option>
+                                          {% for list in Lists %}
+                                          {% if %
+                                        <option value="list.num">list.num</option>
+                                        {% endfor %}
+                                          {% endfor %}
                                       </select>
                                     </label>
                                     <label for="number">Номер в списке
@@ -139,16 +140,21 @@
                             <div class="view-card">
                                 <div class="color" style="background-color: {{ header_color }};">
                                     <div class="list-head">
+
                                         {% if task.deadline %}
                                         <span>{{task.dedline}}</span>
                                         {% endif %}
-                                        <div class="dropdown">
+                                        <!--<div class="dropdown">
                                             <button class="dropbtn"><img src="{% static 'user_pages/img/dots.png' %}" alt=""></button>
                                             <div class="dropdown-content">
-                                              <a href="#">Переместить</a>
+                                              <a href="#1popup-change{{list.id}}">Редактировать</a>
+                                             <a href="#1popup-replace{{list.id}}">Переместить</a>
                                               <a href="{% url 'deletetask' id_ws desk_id task.id %}">Удалить</a>
                                             </div>
-                                        </div>
+                                        </div>-->
+
+
+
                                     </div>
 
                                 </div>
@@ -197,27 +203,36 @@
                                             <div class="button-group">
                                                 <h4>{{checklist.name}}</h4>
                                                 <div class="buttons">
-                                                    <button class="checklist-button">Редактировать</button>
-                                                    <button class="checklist-button"><a href="">Удалить</a></button>
+                                                    <div class="dropdown-checklist-button">
+                                                    <button style="margin-left: 1em" class="dropbtn-checklist-button">Редактировать</button>
+                                                    <div class="dropdown-content-checklist-button">
+                                                        <form class="form" method="post" action="{% url 'updatechecklist' id_ws desk_id checklist.id %}">
+                                                            {% csrf_token %}
+                                                            <input class="input-text" type="text" name = "label-name"  value="{{checklist.name}}" placeholder="Название">
+                                                            <button class = "type-1" type="submit" name="button">Сохранить</button>
+                                                        </form>
+                                                    </div>
+                                                    </div>
+                                                    <button class="checklist-button"><a href="{% url 'deletechecklist' id_ws desk_id task.id %}">Удалить</a></button>
                                                 </div>
                                             </div>
-                                            <div class="chekbox-points">
-                                                {% if ActionList %}
+                                            {% if ActionList %}
                                                 {% for temp in ActionList %}
                                                 {% for action in temp %}
                                                 {% if action.cl_id == checklist.id %}
+                                            <div class="chekbox-points">
                                                 <li>
                                                   <label>
                                                     <input class="checkbox-input" type="checkbox">
-                                                    Пункт 1
+                                                    {{action.name}}
                                                   </label>
                                                 </li>
-                                                {% endif %}
-                                                {% endfor %}
-                                                {% endfor %}
-                                                {% endif %}
                                             <!-- Добавьте дополнительные пункты чек-листа -->
                                             </div>
+                                            {% endif %}
+                                                {% endfor %}
+                                                {% endfor %}
+                                                {% endif %}
 
                                             <div class="dropdown-checklist-button">
                                                 <button style="margin-left: 1em" class="dropbtn-checklist-button">Добавить пункт</button>
@@ -235,6 +250,8 @@
                                         {% endfor %}
                                         {% endfor %}
                                         {% endif %}
+
+
                                     </div>
                                     <div class="sidebar-content">
                                         <h5>Связанные карточки</h5>

@@ -491,7 +491,8 @@ label{
   .dropdown:hover .dropbtn {
     background-color: inherit;
   }
-  div[id^='popup-change'], div[id^='popup-replace'] {
+
+      div[id^='popup-change'], div[id^='popup-replace'] {
         position: fixed;
         top: 0;
         left: 0;
@@ -502,9 +503,10 @@ label{
     }
 
 
-  div[id^='window-change'], div[id^='window-replace']  {
+  div[id^='window-change'], div[id^='window-replace'], div[id^='1window-replace'], div[id^='1window-change'] {
         width: 40em;
-        height: auto;
+        height: fit-content;
+        height: fit-content;
         padding: 15px;
         background-color: #ffffff;
         border-radius: 10px;
@@ -516,6 +518,36 @@ label{
         margin: auto;
         margin-top: 3em;
         margin-bottom: 3em;
+      }
+
+      div[id^='popup-change']:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+      div[id^='1popup-change']:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+
+       div[id^='popup-replace']:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
+      }
+      div[id^='1popup-replace']:target {display: block;}
+      .close {
+        display: flex;
+        float: right;
+        text-decoration: none;
+        cursor:pointer;
       }
 /*-----------------------------------------------------*/
    .dropbtn-checklist-button{

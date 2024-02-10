@@ -39,40 +39,43 @@
     </div>
         {% if desk_spaces != '' %}
         {% for desk in desk_spaces %}
-    <div class="exist">
-        <h4 class="name">{{desk.desk_name}}</h4>
-        <a href="{% url 'desk_space' id_ws desk.id %}">Перейти</a>
-        <a href="{% url 'deletedesk' id_ws desk.id %}">Удалить</a>
-        <p class="member">Кол-во участников</p>
-    </div>
-        <h1>Редактирование</h1>
-        <form method="POST" action="{% url 'updatedesk' id_ws desk.id %}">
-                {% csrf_token %}
-                <h6>Название</h6>
-                <input class="input-text" type="text" id="input{{desk.id}}" name="name" value="{{desk.desk_name}}" required>
-                <h6>Описание</h6>
-                <input class="input-text" type="text" id="input{{desk.id}}1" name="desc" value="{{desk.desk_desc}}">
-            <button class="type-1" type="submit">Сохранить изменения</button>
-            </form>
-             <form method="POST" action="{% url 'updatedesk_type' id_ws desk.id %}">
-                 {% csrf_token %}
-                 <h6>Изменить тип доски</h6>
-                 <p><select name="select" size="2">
-                    <option value="public">Публичная</option>
-                    <option value="privat">Приватная</option>
-                 </select></p>
-                 <button class="type-1" type="submit">Изменить тип</button>
-             </form>
-            <form method="POST" action="">
-                {% csrf_token %}
-                 <h6>Изменить фон доски</h6>
-                 <p><select name="select" size="2">
-                     {% for color in colors%}
-                    <option>{{color.name}}</option>
-                     {% endfor %}
-                 </select></p>
-                 <button class="type-1" type="submit">Изменить фон</button>
-             </form>
+        <div class="view-block">
+                <div class="exist">
+                    <h4 class="name">{{desk.desk_name}}</h4>
+                    <a href="{% url 'desk_space' id_ws desk.id %}">Перейти</a>
+                    <a href="{% url 'deletedesk' id_ws desk.id %}">Удалить</a>
+                    <p class="member">Кол-во участников</p>
+                </div>
+
+                    <form style="margin-left: 2em;" method="POST" action="{% url 'updatedesk' id_ws desk.id %}">
+                            {% csrf_token %}
+                            <h3>Редактирование</h3>
+                            <h4>Название</h4>
+                            <input style="margin-bottom: 15px; height: 1em" class="input-text" type="text" id="input{{desk.id}}" name="name" value="{{desk.desk_name}}" required>
+                            <h4>Описание</h4>
+                            <input  style="margin-bottom: 15px; height: 1em" class="input-text" type="text" id="input{{desk.id}}1" name="desc" value="{{desk.desk_desc}}">
+                        <button style="height: auto; width: auto; margin-bottom: 1em" class="type-1" type="submit">Сохранить изменения</button>
+                        </form>
+                         <form  style="margin-left: 2em;" method="POST" action="{% url 'updatedesk_type' id_ws desk.id %}">
+                             {% csrf_token %}
+                             <h4>Изменить тип доски</h4>
+                             <p><select name="select" size="2">
+                                <option value="public">Публичная</option>
+                                <option value="privat">Приватная</option>
+                             </select></p>
+                             <button style="height: auto; width: auto; margin-bottom: 1em" class="type-1" type="submit">Изменить тип</button>
+                         </form>
+                        <form  style="margin-left: 2em;" method="POST" action="">
+                            {% csrf_token %}
+                             <h4>Изменить фон доски</h4>
+                             <p><select name="select" size="2">
+                                 {% for color in colors%}
+                                <option>{{color.name}}</option>
+                                 {% endfor %}
+                             </select></p>
+                             <button style="height: auto; width: auto; margin-bottom: 1em" class="type-1" type="submit">Изменить фон</button>
+                         </form>
+        </div>
         {% endfor %}
         {% endif %}
     <div id="popup-overlay">

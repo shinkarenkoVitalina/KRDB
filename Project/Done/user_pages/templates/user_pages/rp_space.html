@@ -30,21 +30,23 @@
     </div>
         {% if work_spaces != '' %}
         {% for workspace in work_spaces %}
-    <div class="exist">
-        <a href="{% url 'desk' workspace.id %}">Перейти</a>
-        <a href="{% url 'deletews' workspace.id %}">Удалить</a>
-        <h4 class="name">{{workspace.name_rp}}</h4>
-        <p class="member">Кол-во участников</p>
-    </div>
-    <h1>Редактирование</h1>
-        <form method="POST" action="{% url 'updatews' workspace.id %}">
-                {% csrf_token %}
-                <h6>Название</h6>
-                <input class="input-text" type="text" id="input{{workspace.id}}" name="name" value="{{workspace.name_rp}}" required>
-                <h6>Описание</h6>
-                <input class="input-text" type="text" id="input{{workspace.id}}1" name="desc" value="{{workspace.description}}">
-                <button class="type-1" type="submit">Сохранить изменения</button>
-        </form>
+        <div class="view-block">
+                <div class="exist">
+                    <a href="{% url 'desk' workspace.id %}">Перейти</a>
+                    <a href="{% url 'deletews' workspace.id %}">Удалить</a>
+                    <h4 class="name">{{workspace.name_rp}}</h4>
+                    <p class="member">Кол-во участников</p>
+                </div>
+                    <form style="margin-left: 2em;" method="POST" action="{% url 'updatews' workspace.id %}">
+                            {% csrf_token %}
+                            <h3>Редактирование</h3>
+                            <h4>Название</h4>
+                            <input style="margin-bottom: 15px; height: 1em" class="input-text" type="text" id="input{{workspace.id}}" name="name" value="{{workspace.name_rp}}" required>
+                            <h4>Описание</h4>
+                            <input style="margin-bottom: 15px; height: 1em" class="input-text" type="text" id="input{{workspace.id}}1" name="desc" value="{{workspace.description}}">
+                            <button style="height: auto; width: auto; margin-bottom: 1em" class="type-1" type="submit">Сохранить изменения</button>
+                    </form>
+        </div>
         {% endfor %}
         {% endif %}
     <div id="popup-overlay">

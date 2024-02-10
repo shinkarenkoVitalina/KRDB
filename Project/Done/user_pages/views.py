@@ -121,7 +121,7 @@ def GetActionLists(checklist_id):
     query = f"""SELECT * FROM Действие WHERE "id_Чек-листа"={checklist_id}"""
     temps = con.ExecuteReadQuery(query)
     actions = []
-    for i in range(len(actions)):
+    for i in range(len(temps)):
         listatr = ['name', 'check', 'date', 'dedline', 'id', 'cl_id']
         action = dict(zip(listatr, temps[i]))
         actions.append(action)
@@ -190,14 +190,14 @@ def user_desk(request, id_ws, desk_id):
 
     Desks, id_ws = GetDeskSpaces(id_ws)
     Lists = GetDeskLists(desk_id)
-    NormalizeDeskView(Lists)
+    # NormalizeDeskView(Lists)
     Tasksinlists = []
     CheckLists = []
     ActionList = []
     for list in Lists:
         list_id = list['id']
         Taskinlist = GetCardList(list_id)
-        NormalizeListView(Taskinlist)
+        # NormalizeListView(Taskinlist)
         Tasksinlists.append(Taskinlist)
         for task in Taskinlist:
             task_id = task['id']
@@ -325,7 +325,7 @@ def create_checklist(request, id_ws, desk_id, card_id):
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 # ///
 def create_action(request, id_ws, desk_id, checklist_id):
-    name = request.POST.get('name')
+    name = request.POST.get('label-name')
     data = datetime.datetime.now()
     check = False
     query = f"""INSERT INTO Действие(Название, Статус_выполнения, Дата_создания, "id_Чек-листа") VALUES ('{name}', {check}, '{data}', {checklist_id})"""
@@ -376,14 +376,24 @@ def update_desk_type(request, id_ws, desk_id):
     con.ExecuteQuery(query)
     return redirect('desk', id_ws)
 
-def update_list(request, space_id, desk_id, list_id):
-    pass
+def update_list(request, id_ws, desk_id, list_id):
+    name = request.POST.get('name')
+    if (not name):
+        return redirect('desk_space', f'{id_ws}', f'{desk_id}')
+    query = f"""UPDATE Список SET Название = '{name}' WHERE id = {list_id}"""
+    con.ExecuteQuery(query)
+    return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
 def update_card(request, space_id, desk_id, card_id):
     pass
 
-def update_checklist(request, space_id, desk_id, checlist_id):
-    pass
+def update_checklist(request, id_ws, desk_id, checklist_id):
+    name = request.POST.get('label-name')
+    if (not name):
+        return redirect('desk_space', f'{id_ws}', f'{desk_id}')
+    query = f"""UPDATE "Чек-лист" SET Название = '{name}' WHERE id = {checklist_id}"""
+    con.ExecuteQuery(query)
+    return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
 def update_task(request, space_id, desk_id, task_id):
     pass
@@ -412,8 +422,8 @@ def DeleteTask(request, id_ws, desk_id, task_id):
     con.ExecuteQuery(query)
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
-def DeleteChecklist(request, id_ws, desk_id, cl_id):
-    query = f"""DELETE FROM "Чек-лист" WHERE id = {cl_id};"""
+def DeleteChecklist(request, id_ws, desk_id, task_id):
+    query = f"""DELETE FROM "Чек-лист" WHERE id_Карточки = {task_id};"""
     con.ExecuteQuery(query)
     return redirect('desk_space', f'{id_ws}', f'{desk_id}')
 
